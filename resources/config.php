@@ -1,14 +1,5 @@
 <?php
 
-$config = array(
-    "urls" => array(
-        "baseUrl" => "http://localhost:8000/invoice-demo/"
-    ),
-    "paths" => array(
-        "images" => $_SERVER["DOCUMENT_ROOT"] . "/img"
-    )
-);
-
 /*
  * Constants for often-used paths
  */
