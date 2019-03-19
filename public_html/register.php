@@ -9,8 +9,8 @@ require_once(TEMPLATES_PATH . "/header.php");
   <div class="container">
     <div class="row justify-content-center vertical-center">
       <div class="col-4" id="login-form">
-        <h1 class="text-center">Invoice Demo</h1>
         <div class="container">
+          <h2>Register</h2>
           <form>
             <div class="form-group">
               <label for="inputUsername">Username</label>
@@ -20,10 +20,14 @@ require_once(TEMPLATES_PATH . "/header.php");
               <label for="inputPassword">Password</label>
               <input type="password" class="form-control" id="inputPassword">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group">
+              <label for="inputPasswordConfirm">Confirm Password</label>
+              <input type="password" class="form-control" id="inputPasswordConfirm">
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
           </form>
         </div>
-        <p class="text-center">Need an account? Register <a href="register.php">here</a></p>
+        <p class="text-center">Already have an account? Sign in <a href="login.php">here</a></p>
       </div>
     </div>
   </div>
