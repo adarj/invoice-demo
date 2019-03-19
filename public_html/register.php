@@ -27,7 +27,7 @@ require_once(TEMPLATES_PATH . "/header.php");
             <button type="submit" class="btn btn-primary">Create Account</button>
           </form>
         </div>
-        <p class="text-center">Already have an account? Sign in <a href="login.php">here</a></p>
+        <p class="text-center">Already have an account? Log in <a href="login.php">here</a></p>
       </div>
     </div>
   </div>
