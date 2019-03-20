@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-require_once("../resources/config.php");
-require_once(TEMPLATES_PATH . "/header.php");
+require_once("config.php");
+require_once("templates/header.php");
 ?>
 
 <body>
@@ -30,5 +30,5 @@ require_once(TEMPLATES_PATH . "/header.php");
 </body>
 
 <?php
-require_once(TEMPLATES_PATH . "/footer.php");
+require_once("templates/footer.php");
 ?>
