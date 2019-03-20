@@ -24,14 +24,14 @@ EOD;
     }
 }
 
-$new_db_file = True;
+$database_exists = False;
 if (file_exists("invoice_app.db")) {
-    $new_db_file= False;
+    $database_exists = True;
 }
 
 $db = new InvoiceAppDB();
 
-if ($new_db_file) {
+if (!$database_exists) {
     $db->init_tables();
 }
 
