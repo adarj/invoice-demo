@@ -12,7 +12,7 @@
       <ul class="navbar-nav">
         <li class="nav-item dropdown">
           <button type="button" class="btn btn-primary dropdown-toggle pl-3 pr-2" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <?php echo $_SESSION["username"]; ?>
+            <i class="fas fa-user"></i> <?php echo $_SESSION["username"]; ?>
           </button>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="logout.php">Logout</a>
