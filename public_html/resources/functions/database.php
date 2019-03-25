@@ -52,4 +52,29 @@ function createAccount() {
         echo "Username or password is empty";
     }
 }
+
+function loginToAccount() {
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
+
+    if (!empty($username) && !empty($password)) {
+        $db = initDatabase();
+        $sql = "SELECT id, username, password FROM USERS WHERE username = :u";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":u", $username);
+        $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+
+        if ($result) {
+            if ($password == $result['password']) {
+                $_SESSION["loggedIn"] = True;
+                $_SESSION["id"] = $result["id"];
+                $_SESSION["username"] = $result["username"];
+
+                header("location: /");
+                exit();
+            }
+        }
+    }
+}
 ?>

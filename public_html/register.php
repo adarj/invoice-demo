@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require_once("resources/functions/database.php");
 
 if (!empty($_POST)) {
