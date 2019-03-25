@@ -20,7 +20,7 @@
             <button type="submit" class="btn btn-primary">Create Account</button>
           </form>
         </div>
-        <p class="text-center">Already have an account? Log in <a href="../login/">here</a></p>
+        <p class="text-center">Already have an account? Log in <a href="/">here</a></p>
       </div>
     </div>
   </div>
