@@ -1,4 +1,6 @@
 <?php
+# Initializes the database file for this application and returns a SQLite3
+# object
 function initDatabase() {
     $db = new SQLite3("resources/app.db");
     $sql = <<<EOD
@@ -13,6 +15,7 @@ EOD;
     return $db;
 }
 
+# Returns true if the inputted username has not been taken by another user
 function isUsernameUnique($paremUsername, $db) {
     $sql = "SELECT id FROM USERS WHERE username = :u";
 
@@ -27,6 +30,7 @@ function isUsernameUnique($paremUsername, $db) {
     return True;
 }
 
+# Adds a new user to the database
 function createAccount() {
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
@@ -53,6 +57,8 @@ function createAccount() {
     throw new Exception("Failed to create account");
 }
 
+# Creates session for user if the inputted credentials matches an account in
+# the database
 function loginToAccount() {
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
