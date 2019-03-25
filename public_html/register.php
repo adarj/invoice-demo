@@ -45,7 +45,7 @@ if (!empty($_POST)) {
         if (usernameIsUnique($username, $db)) {
             createAccount($username, $password, $db);
             $db->close();
-            header("location: index.php");
+            header("location: /");
             exit();
         } else {
             echo "Username not unique";
