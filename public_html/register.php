@@ -1,38 +1,60 @@
 <?php
 session_start();
 
-require_once("config.php");
-require_once("templates/header.php");
-?>
+function usernameIsUnique($paremUsername, $db) {
+    $sql = "SELECT id FROM USERS WHERE username = :u";
 
-<body>
-  <div class="container">
-    <div class="row justify-content-center vertical-center">
-      <div class="col-4" id="login-form">
-        <div class="container">
-          <h2>Register</h2>
-          <form>
-            <div class="form-group">
-              <label for="inputUsername">Username</label>
-              <input type="text" class="form-control" id="inputUsername">
-            </div>
-            <div class="form-group">
-              <label for="inputPassword">Password</label>
-              <input type="password" class="form-control" id="inputPassword">
-            </div>
-            <div class="form-group">
-              <label for="inputPasswordConfirm">Confirm Password</label>
-              <input type="password" class="form-control" id="inputPasswordConfirm">
-            </div>
-            <button type="submit" class="btn btn-primary">Create Account</button>
-          </form>
-        </div>
-        <p class="text-center">Already have an account? Log in <a href="login.php">here</a></p>
-      </div>
-    </div>
-  </div>
-</body>
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":u", $paremUsername);
+    $result = $stmt->execute();
 
-<?php
-require_once("templates/footer.php");
+    if ($result->fetchArray()) {
+        return False;
+    }
+
+    return True;
+}
+
+function createAccount($paremUsername, $paremPassword, $db) {
+    $sql = "INSERT INTO USERS (username, password) VALUES (:u, :p)";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":u", $paremUsername);
+    $stmt->bindValue(":p", $paremPassword);
+    $stmt->execute();
+}
+
+require_once("resources/templates/header.php");
+
+$db = new SQLite3("resources/app.db");
+$sql = <<<EOD
+CREATE TABLE IF NOT EXISTS USERS (
+    id INTEGER PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+EOD;
+$db->exec($sql);
+
+if (!empty($_POST)) {
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
+
+    if (!empty($username) && !empty($password)) {
+        if (usernameIsUnique($username, $db)) {
+            createAccount($username, $password, $db);
+            $db->close();
+            header("location: index.php");
+            exit();
+        } else {
+            echo "Username not unique";
+        }
+    } else {
+        echo "Username or password is empty";
+    }
+}
+
+require_once("resources/forms/register.php");
+require_once("resources/templates/footer.php");
 ?>
