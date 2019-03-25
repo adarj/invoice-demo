@@ -1,4 +1,4 @@
-<?php
+<?php namespace DB;
 function usernameIsUnique($paremUsername, $db) {
     $sql = "SELECT id FROM USERS WHERE username = :u";
 

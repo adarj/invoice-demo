@@ -9,10 +9,10 @@ if (!empty($_POST)) {
     $password = trim($_POST["password"]);
 
     if (!empty($username) && !empty($password)) {
-        $db = initDatabase();
+        $db = DB::initDatabase();
 
-        if (usernameIsUnique($username, $db)) {
-            createAccount($username, $password, $db);
+        if (DB::usernameIsUnique($username, $db)) {
+            DB::createAccount($username, $password, $db);
             $db->close();
             header("location: /");
             exit();
