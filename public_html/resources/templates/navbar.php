@@ -10,11 +10,13 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <button type="button" class="btn btn-primary dropdown-toggle pl-3 pr-2" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user"></i> <?php echo $_SESSION["username"]; ?>
+        <li class="nav-item dropdown" id="accountDropdownButton">
+          <button type="button" class="btn btn-primary dropdown-toggle pl-3 pr-2" id="accountDropdownButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>
           </button>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <p class="dropdown-header">Signed in as <b><?php echo $_SESSION["username"]; ?></b></p>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="logout.php">Logout</a>
           </div>
         </li>
