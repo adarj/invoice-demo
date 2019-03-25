@@ -45,12 +45,12 @@ function createAccount() {
 
             header("location: /");
             exit();
-        } else {
-            echo "Username not unique";
         }
     } else {
-        echo "Username or password is empty";
+        throw new Exception("Username or password is empty");
     }
+
+    throw new Exception("Failed to create account");
 }
 
 function loginToAccount() {
@@ -75,6 +75,10 @@ function loginToAccount() {
                 exit();
             }
         }
+    } else {
+        throw new Exception("Username or password field is empty");
     }
+
+    throw new Exception("Failed to login to account");
 }
 ?>
