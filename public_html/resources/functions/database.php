@@ -1,5 +1,5 @@
 <?php namespace DB;
-function usernameIsUnique($paremUsername, $db) {
+function isUsernameUnique($paremUsername, $db) {
     $sql = "SELECT id FROM USERS WHERE username = :u";
 
     $stmt = $db->prepare($sql);
