@@ -9,7 +9,7 @@ if (!empty($_POST)) {
     $lastName = trim($_POST["last-name"]);
 
     if (!empty($firstName) && !empty($lastName)) {
-        addCustomer();
+        addCustomer($firstName, $lastName);
     } else {
         throw new Exception("First name or last name field is empty");
     }
