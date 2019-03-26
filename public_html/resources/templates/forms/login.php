@@ -15,6 +15,7 @@
               <button type="submit" class="btn btn-primary">Submit</button>
             </form>
           </div>
+          <br>
           <p class="text-center">Need an account? Register <a href="register.php">here</a></p>
         </div>
       </div>

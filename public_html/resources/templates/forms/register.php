@@ -19,6 +19,7 @@
               <button type="submit" class="btn btn-primary">Create Account</button>
             </form>
           </div>
+          <br>
           <p class="text-center">Already have an account? Log in <a href="/">here</a></p>
         </div>
       </div>
