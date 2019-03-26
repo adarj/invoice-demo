@@ -95,4 +95,7 @@ function addCustomer($firstName, $lastName) {
     header("location: /");
     exit();
 }
+
+function addInvoice() {
+}
 ?>

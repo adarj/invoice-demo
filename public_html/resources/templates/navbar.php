@@ -15,6 +15,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item" href="/new-customer/">New Customer</a>
+              <a class="dropdown-item" href="/new-invoice/">New Invoice</a>
             </div>
           </li>
           <li class="nav-item dropdown" id="accountDropdown">
