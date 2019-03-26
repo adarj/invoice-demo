@@ -2,12 +2,29 @@
 A simple web application where users can upload and download invoices.
 
 ## Required features
-- [ ] Use a database system for storing data
-- [ ] Use a login page where each user can only see his/her uploaded invoices
-- [ ] Users can add, edit, and delete customers
-- [ ] Users can select customers, enter invoice number, invoice date, invoice amount and
-invoice status(billed, paid), and upload a scanned invoice in PDF format
-- [ ] Users can list all the invoices, sorted by customer and invoice date; users also can filter to show invoices
-for selected customer
-- [ ] Users can edit and delete invoice data
-- [ ] User can download PDF invoice (uploaded one) from the system
+
+### Users
+- [x] User can login with username and password
+- [x] User can register a new account
+- [x] Uses a database to store user data
+
+### Invoices
+- [ ] Logged in user can only see his/her uploaded invoices
+- [ ] User can select a customer and create a new invoice with the following fields:
+    * Invoice number
+    * Invoice date
+    * Invoice amount
+    * Invoice status (billed or paid)
+    * An option to upload a scanned PDF invoice
+- [ ] User can edit invoice data
+- [ ] User can delete invoice data
+- [ ] User can download an uploaded scanned invoice
+- [ ] User can list all invoices and sort by customer or invoice date
+- [ ] User can filter list of invoices by customer
+- [ ] Uses a database to store invoice data
+
+### Customers
+- [ ] User can add new customers
+- [ ] User can edit customer data
+- [ ] User can delete customers
+- [ ] Uses a database to store customer data
