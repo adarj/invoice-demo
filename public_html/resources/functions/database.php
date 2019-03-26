@@ -7,7 +7,7 @@ function initDatabase() {
 CREATE TABLE IF NOT EXISTS USERS (
     id INTEGER PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 EOD;
@@ -39,11 +39,11 @@ function createAccount() {
         $db = initDatabase();
 
         if (isUsernameUnique($username, $db)) {
-            $sql = "INSERT INTO USERS (username, password) VALUES (:u, :p)";
+            $sql = "INSERT INTO USERS (username, password_hash) VALUES (:u, :p)";
 
             $stmt = $db->prepare($sql);
             $stmt->bindValue(":u", $username);
-            $stmt->bindValue(":p", $password);
+            $stmt->bindValue(":p", password_hash($password, PASSWORD_DEFAULT));
             $stmt->execute();
             $db->close();
 
@@ -65,14 +65,14 @@ function loginToAccount() {
 
     if (!empty($username) && !empty($password)) {
         $db = initDatabase();
-        $sql = "SELECT id, username, password FROM USERS WHERE username = :u";
+        $sql = "SELECT id, username, password_hash FROM USERS WHERE username = :u";
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":u", $username);
         $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
 
         if ($result) {
-            if ($password == $result['password']) {
+            if (password_verify($password, $result["password_hash"])) {
                 $_SESSION["loggedIn"] = True;
                 $_SESSION["id"] = $result["id"];
                 $_SESSION["username"] = $result["username"];
