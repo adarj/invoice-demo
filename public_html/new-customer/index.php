@@ -2,6 +2,11 @@
 session_start();
 
 require_once("../config.php");
+require_once(root_path . "/resources/functions/database.php");
+
+if (!empty($_POST)) {
+    addCustomer();
+}
 
 # If the user is not logged in, then open login page
 if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== True){

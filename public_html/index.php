@@ -7,6 +7,6 @@ require_once("config.php");
 if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] === True){
     require_once(root_path . "/home.php");
 } else {
-    require_once(root_path . "login.php");
+    require_once(root_path . "/login.php");
 }
 ?>

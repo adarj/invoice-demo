@@ -2,7 +2,8 @@
 # Initializes the database file for this application and returns a SQLite3
 # object
 function initDatabase() {
-    $db = new SQLite3("resources/app.db");
+    $db = new SQLite3(root_path . "/resources/app.db");
+
     $sql = <<<EOD
 CREATE TABLE IF NOT EXISTS USERS (
     id INTEGER PRIMARY KEY,
@@ -10,14 +11,18 @@ CREATE TABLE IF NOT EXISTS USERS (
     password_hash VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+EOD;
+    $db->exec($sql);
 
+    $sql = <<<EOD
 CREATE TABLE IF NOT EXISTS CUSTOMERS (
     id INTEGER PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL
 );
 EOD;
     $db->exec($sql);
+
     return $db;
 }
 
@@ -92,5 +97,27 @@ function loginToAccount() {
     }
 
     throw new Exception("Failed to login to account");
+}
+
+function addCustomer() {
+    $firstName = trim($_POST["first-name"]);
+    $lastName = trim($_POST["last-name"]);
+
+    if (!empty($firstName) && !empty($lastName)) {
+        $db = initDatabase();
+
+        $sql = "INSERT INTO CUSTOMERS (first_name, last_name) VALUES (:f, :l)";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(":f", $firstName);
+        $stmt->bindValue(":l", $lastName);
+        $stmt->execute();
+        $db->close();
+
+        header("location: /");
+        exit();
+    } else {
+        throw new Exception("First name or last name field is empty");
+    }
 }
 ?>
