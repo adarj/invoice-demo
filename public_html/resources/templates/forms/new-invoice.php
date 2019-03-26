@@ -16,7 +16,12 @@
               </div>
               <div class="form-group">
                 <label for="invoiceAmountInput">Amount</label>
-                <input type="text" class="form-control" name="invoice-amount" id="invoiceAmountInput" required>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="dollarSignAddon">$</span>
+                  </div>
+                  <input type="text" class="form-control" name="invoice-amount" id="invoiceAmountInput" required>
+                </div>
               </div>
               <div class="form-group">
                 <label for="invoiceStatusInput">Status</label>
