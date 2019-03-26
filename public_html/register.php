@@ -3,7 +3,12 @@ require_once("config.php");
 require_once(root_path . "/resources/functions/database.php");
 
 if (!empty($_POST)) {
-    createAccount();
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
+
+    if (!empty($username) && !empty($password)) {
+        createAccount($username, $password);
+    }
 }
 
 # Load HTML/CSS

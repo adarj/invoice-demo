@@ -5,7 +5,14 @@ require_once("../config.php");
 require_once(root_path . "/resources/functions/database.php");
 
 if (!empty($_POST)) {
-    addCustomer();
+    $firstName = trim($_POST["first-name"]);
+    $lastName = trim($_POST["last-name"]);
+
+    if (!empty($firstName) && !empty($lastName)) {
+        addCustomer();
+    } else {
+        throw new Exception("First name or last name field is empty");
+    }
 }
 
 # If the user is not logged in, then open login page

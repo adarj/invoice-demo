@@ -27,11 +27,11 @@ EOD;
 }
 
 # Returns true if the inputted username has not been taken by another user
-function isUsernameUnique($paremUsername, $db) {
+function isUsernameUnique($db, $username) {
     $sql = "SELECT id FROM USERS WHERE username = :u";
 
     $stmt = $db->prepare($sql);
-    $stmt->bindValue(":u", $paremUsername);
+    $stmt->bindValue(":u", $username);
     $result = $stmt->execute();
 
     if ($result->fetchArray()) {
@@ -42,82 +42,57 @@ function isUsernameUnique($paremUsername, $db) {
 }
 
 # Adds a new user to the database
-function createAccount() {
-    $username = trim($_POST["username"]);
-    $password = trim($_POST["password"]);
+function createAccount($username, $password) {
+    $db = initDatabase();
 
-    if (!empty($username) && !empty($password)) {
-        $db = initDatabase();
-
-        if (isUsernameUnique($username, $db)) {
-            $sql = "INSERT INTO USERS (username, password_hash) VALUES (:u, :p)";
-
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(":u", $username);
-            $stmt->bindValue(":p", password_hash($password, PASSWORD_DEFAULT));
-            $stmt->execute();
-            $db->close();
-
-            header("location: /");
-            exit();
-        }
-    } else {
-        throw new Exception("Username or password is empty");
-    }
-
-    throw new Exception("Failed to create account");
-}
-
-# Creates session for user if the inputted credentials matches an account in
-# the database
-function loginToAccount() {
-    $username = trim($_POST["username"]);
-    $password = trim($_POST["password"]);
-
-    if (!empty($username) && !empty($password)) {
-        $db = initDatabase();
-        $sql = "SELECT id, username, password_hash FROM USERS WHERE username = :u";
+    if (isUsernameUnique($db, $username)) {
+        $sql = "INSERT INTO USERS (username, password_hash) VALUES (:u, :p)";
 
         $stmt = $db->prepare($sql);
         $stmt->bindValue(":u", $username);
-        $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
-
-        if ($result) {
-            if (password_verify($password, $result["password_hash"])) {
-                $_SESSION["loggedIn"] = True;
-                $_SESSION["id"] = $result["id"];
-                $_SESSION["username"] = $result["username"];
-
-                header("location: /");
-                exit();
-            }
-        }
-    } else {
-        throw new Exception("Username or password field is empty");
-    }
-
-    throw new Exception("Failed to login to account");
-}
-
-function addCustomer() {
-    $firstName = trim($_POST["first-name"]);
-    $lastName = trim($_POST["last-name"]);
-
-    if (!empty($firstName) && !empty($lastName)) {
-        $db = initDatabase();
-
-        $sql = "INSERT INTO CUSTOMERS (first_name, last_name) VALUES (:f, :l)";
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(":f", $firstName);
-        $stmt->bindValue(":l", $lastName);
+        $stmt->bindValue(":p", password_hash($password, PASSWORD_DEFAULT));
         $stmt->execute();
         $db->close();
 
         header("location: /");
         exit();
-    } else {
-        throw new Exception("First name or last name field is empty");
     }
+}
+
+# Creates session for user if the inputted credentials matches an account in
+# the database
+function loginToAccount($username, $password) {
+    $db = initDatabase();
+    $sql = "SELECT id, username, password_hash FROM USERS WHERE username = :u";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":u", $username);
+    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    $db->close();
+
+    if ($result) {
+        if (password_verify($password, $result["password_hash"])) {
+            $_SESSION["loggedIn"] = True;
+            $_SESSION["id"] = $result["id"];
+            $_SESSION["username"] = $result["username"];
+
+            header("location: /");
+            exit();
+        }
+    }
+}
+
+function addCustomer($firstName, $lastName) {
+    $db = initDatabase();
+    $sql = "INSERT INTO CUSTOMERS (first_name, last_name) VALUES (:f, :l)";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":f", $firstName);
+    $stmt->bindValue(":l", $lastName);
+    $stmt->execute();
+    $db->close();
+
+    header("location: /");
+    exit();
 }
 ?>

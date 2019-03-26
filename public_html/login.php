@@ -2,7 +2,12 @@
 require_once(root_path . "/resources/functions/database.php");
 
 if (!empty($_POST)) {
-    loginToAccount();
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
+
+    if (!empty($username) && !empty($password)) {
+        loginToAccount($username, $password);
+    }
 }
 
 # Load HTML/CSS
