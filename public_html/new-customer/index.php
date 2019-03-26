@@ -12,5 +12,6 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== True){
 # Load HTML/CSS
 require_once(root_path . "/resources/templates/header.php");
 require_once(root_path . "/resources/templates/navbar.php");
+require_once(root_path . "/resources/templates/forms/new-customer.php");
 require_once(root_path . "/resources/templates/footer.php");
 ?>
