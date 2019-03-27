@@ -10,6 +10,12 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== True){
     exit();
 }
 
+if (isset($_POST["delete"])) {
+    deleteInvoice($_POST["delete"]);
+}
+
+$invoices = getInvoices();
+
 # Load HTML/CSS
 require_once(root_path . "/resources/templates/header.php");
 require_once(root_path . "/resources/templates/navbar.php");
