@@ -22,9 +22,13 @@
               <td>$<?php echo $value["amount"]; ?></td>
               <td><?php echo $value["status"]; ?></td>
               <td>
+                <?php if($value["file"]): ?>
                 <form method="post">
                   <button type="submit" class="btn btn-primary" name="pdf" value="<?php echo $value["id"]; ?>">View PDF</button>
                 </form>
+                <?php else: ?>
+                <button type="button" class="btn btn-primary" disabled>View PDF</button>
+                <?php endif; ?>
               </td>
               <td>
                 <form method="post">
