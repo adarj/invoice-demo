@@ -10,6 +10,9 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== True){
     exit();
 }
 
+if (isset($_POST["pdf"])) {
+    getPDF($_POST["pdf"]);
+}
 if (isset($_POST["delete"])) {
     deleteInvoice($_POST["delete"]);
 }

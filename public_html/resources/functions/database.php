@@ -231,4 +231,25 @@ function deleteInvoice($invoice_id) {
     $db->close();
 }
 
+function getPDF($invoice_id) {
+    $db = initDatabase();
+    $sql = "SELECT file FROM INVOICES WHERE id = :i";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":i", $invoice_id);
+    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    $rawFile = $result["file"];
+
+    $db->close();
+
+    $file = tmpfile();
+    fwrite($file, $rawFile);
+    $metadata = stream_get_meta_data($file);
+    $filename = $metadata["uri"];
+
+    header("Content-disposition: attachment; filename=invoice.pdf");
+    header("Content-type: application/pdf");
+
+    readfile($filename);
+}
 ?>

@@ -9,6 +9,7 @@
               <th scope="col">Date</th>
               <th scope="col">Amount</th>
               <th scope="col">Status</th>
+              <th scope="col" width="11%"></th>
               <th scope="col" width="10%"></th>
             </tr>
           </thead>
@@ -20,6 +21,11 @@
               <td><?php echo $value["date"]; ?></td>
               <td>$<?php echo $value["amount"]; ?></td>
               <td><?php echo $value["status"]; ?></td>
+              <td>
+                <form method="post">
+                  <button type="submit" class="btn btn-primary" name="pdf" value="<?php echo $value["id"]; ?>">View PDF</button>
+                </form>
+              </td>
               <td>
                 <form method="post">
                   <button type="submit" class="btn btn-danger" name="delete" value="<?php echo $value["id"]; ?>">Delete</button>
