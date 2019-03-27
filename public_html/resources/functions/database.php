@@ -96,6 +96,17 @@ function loginToAccount($username, $password) {
     }
 }
 
+function getCustomer($customer_id) {
+    $db = initDatabase();
+    $sql = "SELECT * FROM CUSTOMERS where id = :c";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":c", $customer_id);
+    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    $db->close();
+    return $result;
+}
+
 # Returns an array of all customers in the database
 function getCustomers() {
     $db = initDatabase();
@@ -145,6 +156,25 @@ function deleteCustomer($customer_id) {
     $stmt->execute();
 }
 
+function getInvoices() {
+    $db = initDatabase();
+    $sql = "SELECT * FROM INVOICES WHERE user_id = :u";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":u", $_SESSION["id"]);
+    $result = $stmt->execute();
+    $invoices = array();
+
+    while ($res = $result->fetchArray(SQLITE3_ASSOC)) {
+        array_push($invoices, $res);
+    }
+
+    $result->finalize();
+    $db->close();
+
+    return $invoices;
+}
+
 # Adds an invoice to the INVOICES table in the database
 function addInvoice($customer, $number, $date, $amount, $status) {
     $db = initDatabase();
@@ -188,5 +218,38 @@ function addInvoice($customer, $number, $date, $amount, $status) {
 
     header("location: /");
     exit();
+}
+
+# Removes the inputted invoice from the database
+function deleteInvoice($invoice_id) {
+    $db = initDatabase();
+    $sql = "DELETE FROM INVOICES WHERE id = :i";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":i", $invoice_id);
+    $stmt->execute();
+    $db->close();
+}
+
+function getPDF($invoice_id) {
+    $db = initDatabase();
+    $sql = "SELECT file FROM INVOICES WHERE id = :i";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":i", $invoice_id);
+    $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
+    $rawFile = $result["file"];
+
+    $db->close();
+
+    $file = tmpfile();
+    fwrite($file, $rawFile);
+    $metadata = stream_get_meta_data($file);
+    $filename = $metadata["uri"];
+
+    header("Content-disposition: attachment; filename=invoice.pdf");
+    header("Content-type: application/pdf");
+
+    readfile($filename);
 }
 ?>
