@@ -23,6 +23,20 @@ CREATE TABLE IF NOT EXISTS CUSTOMERS (
 EOD;
     $db->exec($sql);
 
+    $sql = <<<EOD
+CREATE TABLE IF NOT EXISTS INVOICES (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    customer_id INTEGER NOT NULL,
+    number INTEGER NOT NULL,
+    date DATETIME NOT NULL,
+    amount INTEGER NOT NULL,
+    status VARCHAR(10) NOT NULL,
+    file BLOB
+);
+EOD;
+    $db->exec($sql);
+
     return $db;
 }
 
@@ -82,6 +96,25 @@ function loginToAccount($username, $password) {
     }
 }
 
+# Returns an array of all customers in the database
+function getCustomers() {
+    $db = initDatabase();
+    $sql = "SELECT id, first_name, last_name FROM CUSTOMERS";
+
+    $stmt = $db->prepare($sql);
+    $result = $stmt->execute();
+    $customers = array();
+
+    while ($res = $result->fetchArray(SQLITE3_ASSOC)) {
+        array_push($customers, $res);
+    }
+
+    $result->finalize();
+    $db->close();
+
+    return $customers;
+}
+
 function addCustomer($firstName, $lastName) {
     $db = initDatabase();
     $sql = "INSERT INTO CUSTOMERS (first_name, last_name) VALUES (:f, :l)";
@@ -91,6 +124,51 @@ function addCustomer($firstName, $lastName) {
     $stmt->bindValue(":l", $lastName);
     $stmt->execute();
     $db->close();
+
+    header("location: /");
+    exit();
+}
+
+# Adds an invoice to the INVOICES table in the database
+function addInvoice($customer, $number, $date, $amount, $status) {
+    $db = initDatabase();
+    $sql = "INSERT INTO INVOICES (user_id, customer_id, number, date, amount, status, file) VALUES (:u, :c, :n, :d, :a, :s, :f)";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":u", $_SESSION["id"]);
+    $stmt->bindValue(":c", $customer);
+    $stmt->bindValue(":n", $number);
+    $stmt->bindValue(":d", $date);
+    $stmt->bindValue(":a", $amount);
+    $stmt->bindValue(":s", $status);
+    $stmt->bindValue(":f", NULL);
+
+    $destPath = NULL;
+
+    # If the user uploaded a document, add it to the INSERT statement
+    if (isset($_FILES["invoice-file"]) && $_FILES["invoice-file"]["error"] === UPLOAD_ERR_OK) {
+        $tmpPath = $_FILES['invoice-file']['tmp_name'];
+        $filename = $_FILES['invoice-file']['name'];
+        $exp = explode(".", $filename);
+        $extension = strtolower(end($exp));
+
+        $newFilename = md5(time() . $filename) . '.' . $extension;
+        $destPath = root_path . "/resources/" . $newFilename;
+
+        if ($extension == "pdf") {
+            move_uploaded_file($tmpPath, $destPath);
+            $fh = fopen($destPath, 'rb');
+            $stmt->bindValue(":f", $fh, SQLITE3_BLOB);
+        }
+    }
+
+    $stmt->execute();
+    fclose($fh);
+    $db->close();
+
+    if ($destPath) {
+        unlink($destPath);
+    }
 
     header("location: /");
     exit();
