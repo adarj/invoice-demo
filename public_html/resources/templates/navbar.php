@@ -31,7 +31,7 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
               <p class="dropdown-header">Signed in as <b><?php echo $_SESSION["username"]; ?></b></p>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="logout.php">Logout</a>
+              <a class="dropdown-item" href="/logout.php">Logout</a>
             </div>
           </li>
         </ul>
