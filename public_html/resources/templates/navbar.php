@@ -10,6 +10,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="/customers/">Customers</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/invoices/">Invoices</a>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown" id="addDropdown">
