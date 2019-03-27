@@ -129,6 +129,22 @@ function addCustomer($firstName, $lastName) {
     exit();
 }
 
+# Removes all data and invoices that are related to the inputted customer id
+function deleteCustomer($customer_id) {
+    $db = initDatabase();
+    $sql = "DELETE FROM INVOICES WHERE customer_id = :c";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":c", $customer_id);
+    $stmt->execute();
+
+    $sql = "DELETE FROM CUSTOMERS WHERE id = :c";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindValue(":c", $customer_id);
+    $stmt->execute();
+}
+
 # Adds an invoice to the INVOICES table in the database
 function addInvoice($customer, $number, $date, $amount, $status) {
     $db = initDatabase();

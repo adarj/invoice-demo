@@ -10,8 +10,15 @@ if(!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== True){
     exit();
 }
 
+if (isset($_POST["delete"])) {
+    deleteCustomer($_POST["delete"]);
+}
+
+$customers = getCustomers();
+
 # Load HTML/CSS
 require_once(root_path . "/resources/templates/header.php");
 require_once(root_path . "/resources/templates/navbar.php");
+require_once(root_path . "/resources/templates/customers.php");
 require_once(root_path . "/resources/templates/footer.php");
 ?>
