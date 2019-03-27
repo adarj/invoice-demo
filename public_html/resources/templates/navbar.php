@@ -20,8 +20,8 @@
               <i class="fas fa-plus"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="/new-customer/">New Customer</a>
-              <a class="dropdown-item" href="/new-invoice/">New Invoice</a>
+              <a class="dropdown-item" href="/customers/new/">New Customer</a>
+              <a class="dropdown-item" href="/invoices/new/">New Invoice</a>
             </div>
           </li>
           <li class="nav-item dropdown" id="accountDropdown">
