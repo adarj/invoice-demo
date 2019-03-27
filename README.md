@@ -17,7 +17,7 @@ A simple web application where users can upload and download invoices.
     * Invoice status (billed or paid)
     * An option to upload a scanned PDF invoice
 - [ ] User can edit invoice data
-- [ ] User can delete invoice data
+- [x] User can delete invoice data
 - [x] User can download an uploaded scanned invoice
 - [x] User can list all invoices
 - [ ] User can sort invoices by customer or date
@@ -27,5 +27,5 @@ A simple web application where users can upload and download invoices.
 ### Customers
 - [x] User can add new customers
 - [ ] User can edit customer data
-- [x] User can delete customers
+- [x] User can delete customer data
 - [x] Uses a database to store customer data
