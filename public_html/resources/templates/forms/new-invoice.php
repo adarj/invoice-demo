@@ -4,6 +4,14 @@
           <h1 class="text-center mt-3">New Invoice</h1>
           <div class="container">
             <form method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="CustomerInput">Customer</label>
+                <select class="form-control" name="customer" id="customerInput" required>
+                  <?php foreach($customers as $key=>$value): ?>
+                  <option value="<?php echo $value["id"]; ?>"><?php echo $value["first_name"] . " " . $value["last_name"]; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="invoiceNumberInput">Invoice Number</label>
