@@ -26,5 +26,5 @@ A simple web application where users can upload and download invoices.
 ### Customers
 - [x] User can add new customers
 - [ ] User can edit customer data
-- [ ] User can delete customers
+- [x] User can delete customers
 - [x] Uses a database to store customer data
