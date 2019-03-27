@@ -7,6 +7,9 @@
 
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/customers/">Customers</a>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item dropdown" id="addDropdown">
